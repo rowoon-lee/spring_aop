@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<bean id="advice" class="spring_aop07_aopHW.CheckTime_proxy"></bean> 
+<!-- <bean id="aspect" class="spring_aop07_aopHW.CheckTime_AspectJ"></bean> -->
+
+<bean id="weapon" class="spring_aop07_aopHW.WeaponImple">
+	<property name="type" value="M4" />
+</bean>
+
+<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<property name="target" ref="weapon" />
+	<property name="interceptorNames" value="advice" />	<!-- 껴들어갈거 -->
+</bean>
+ 
+ 
+ <!-- aop 설정 -->
+<!--  <aop:config>
+ 	<aop:aspect id="Aspect" ref="aspect">	끼어들어갈 애
+ 		<aop:pointcut expression="execution (public * *(..))" id="checkPoint"/>
+ 		<aop:around method="logAround" pointcut-ref="checkPoint"/>	checkPoint 규약 연동
+ 	</aop:aspect>
+ 
+ </aop:config> -->
+ 
+</beans>

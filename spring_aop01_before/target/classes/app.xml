@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+<bean id="hijack" class="spring_aop01.HijackAdvice"></bean>
+
+<bean id="biz" class="spring_aop01.CustomerServiceImple">	<!-- new~ -->
+	<property name="name" value="홍길동" />		<!-- setter -->
+	<property name="email" value="hong@gmail.com" />
+</bean>
+
+<!-- 
+	spring framework를 사용하면 
+	1. 코드를 작성한다
+	2. 컴파일
+	3. 프록시를 이용(대행자)
+ -->
+ <bean id="execute" class="org.springframework.aop.framework.ProxyFactoryBean">	<!-- Proxy : 대행자 -->
+	<!-- 대항자(proxy)에게 biz를 타겟으로 지정 (setter로) biz라는 객체로 지정하니까 ref-->
+	<property name="target" ref="biz" />	<!-- 머가 껴들어 오는지 알려줘야 함 -->
+	
+	<!-- aspect(측면)에서 끼워넣을 작업(advice)를 지정  (애는 ref아니고 value로)-->
+	<property name="interceptorNames">
+		<value>hijack</value>
+</property>
+	
+</bean>
+
+
+</beans>
